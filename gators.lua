@@ -27,17 +27,15 @@ function _gators_update(gators)
             gators.right_gator.x = gators.cam.x + 128 - (gators.cam.x + 128 - gators.right_gator.target_x) * gators.right_gator.distance
         else
             local interesting_creature = interesting_baby or interesting_bird
-            if interesting_creature then -- should never be nil but sometimes is... :,-(
-                gators.left_gator.target_x = interesting_creature.x + 24
-                gators.left_gator.distance = (interesting_creature.y - interested_altitude) / (death_zone - interested_altitude) 
-                gators.left_gator.distance = gators.left_gator.distance > 1 and 1 or gators.left_gator.distance
-                gators.left_gator.x = gators.cam.x - 16 + (gators.left_gator.target_x - gators.cam.x - 16) * gators.left_gator.distance
+            gators.left_gator.target_x = interesting_creature.x + 24
+            gators.left_gator.distance = (interesting_creature.y - interested_altitude) / (death_zone - interested_altitude) 
+            gators.left_gator.distance = gators.left_gator.distance > 1 and 1 or gators.left_gator.distance
+            gators.left_gator.x = gators.cam.x - 16 + (gators.left_gator.target_x - gators.cam.x - 16) * gators.left_gator.distance
 
-                gators.right_gator.target_x = interesting_creature.x
-                gators.right_gator.distance = (interesting_creature.y - interested_altitude) / (death_zone - interested_altitude)
-                gators.right_gator.distance = gators.right_gator.distance > 1 and 1 or gators.right_gator.distance
-                gators.right_gator.x = gators.cam.x + 128 - (gators.cam.x + 128 - gators.right_gator.target_x) * gators.right_gator.distance
-            end
+            gators.right_gator.target_x = interesting_creature.x
+            gators.right_gator.distance = (interesting_creature.y - interested_altitude) / (death_zone - interested_altitude)
+            gators.right_gator.distance = gators.right_gator.distance > 1 and 1 or gators.right_gator.distance
+            gators.right_gator.x = gators.cam.x + 128 - (gators.cam.x + 128 - gators.right_gator.target_x) * gators.right_gator.distance
         end
     else
         if gators.left_gator.x > gators.cam.x -16 then gators.left_gator.x -= 8 end

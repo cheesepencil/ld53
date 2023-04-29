@@ -1,7 +1,7 @@
 scene = {}
 
 function _init()
-    scene.world = make_world(512, 1234)
+    scene.world = make_world(512 - 128, 1234)
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)
@@ -40,8 +40,19 @@ function _update()
     -- -- loss conditions
 
     -- -- collisions
+    if scene.baby then
+        -- baby vs house
+        for goal in all(scene.world.goals) do
+            if not goal.success and collide_baby_vs_house(scene.baby, goal) then
+                goal.success = true
+                scene.baby = nil
+                scene.gators.baby = nil
+                break
+            end
+        end
+    end
 
-    -- baby vs ground
+        -- baby vs ground
     if scene.baby and scene.baby.y > 120 - 8 then
         local function print_dead_and_die(juice)
             del(scene.juice, juice)

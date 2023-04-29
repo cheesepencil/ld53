@@ -1,3 +1,14 @@
+function _collide(a1, a2)
+    if a1.x < a2.x + a2.w and
+        a1.x + a1.w > a2.x and 
+        a1.y < a2.y + a2.h and
+        a1.h + a1.y > a2.y then
+            return true
+        else
+            return false
+        end
+end
+
 function collide_long_bois(actor1, actor2)
     local a1 = {
         x = actor1.x,
@@ -12,12 +23,22 @@ function collide_long_bois(actor1, actor2)
         w = 16
     }
 
-    if a1.x < a2.x + a2.w and
-        a1.x + a1.w > a2.x and 
-        a1.y < a2.y + a2.h and
-        a1.h + a1.y > a2.y then
-            return true
-        else
-            return false
-        end
+    return _collide(a1, a2)
+end
+
+function collide_baby_vs_house(baby, house)
+    local a1 = {
+        x = baby.x,
+        y = baby.y,
+        h = 8,
+        w = 8
+    }
+    local a2 = {
+        x = house.x,
+        y = house.y,
+        h = 16,
+        w = 16
+    }
+
+    return _collide(a1, a2)
 end
