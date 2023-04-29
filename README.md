@@ -1,2 +1,2 @@
-# ld53
-Ludum Dare 53 - Delivery
+# Ludum Dare 52 - Delivery
+https://ldjam.com/events/ludum-dare/53
