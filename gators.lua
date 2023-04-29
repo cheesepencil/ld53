@@ -3,7 +3,7 @@ function _gators_update(gators)
     local death_zone = 128 - 16
     local interesting_baby = gators.baby and gators.baby.y >= interested_altitude and gators.baby or nil
     local interesting_bird = gators.bird and gators.bird.y >= interested_altitude and gators.bird or nil
-
+    
     if interesting_baby or interesting_bird then
         if interesting_baby and interesting_bird then
             local left_interesting_creature
@@ -26,7 +26,7 @@ function _gators_update(gators)
             gators.right_gator.distance = gators.right_gator.distance > 1 and 1 or gators.right_gator.distance
             gators.right_gator.x = gators.cam.x + 128 - (gators.cam.x + 128 - gators.right_gator.target_x) * gators.right_gator.distance
         else
-            local interesting_creature = interesting_baby and interesting_bird or interesting_baby
+            local interesting_creature = interesting_baby or interesting_bird
             if interesting_creature then -- should never be nil but sometimes is... :,-(
                 gators.left_gator.target_x = interesting_creature.x + 24
                 gators.left_gator.distance = (interesting_creature.y - interested_altitude) / (death_zone - interested_altitude) 
@@ -40,28 +40,31 @@ function _gators_update(gators)
             end
         end
     else
-        gators.left_gator.target_x = gators.cam.x - 16
-        gators.left_gator.distance = 1
-        gators.left_gator.x = gators.cam.x - 16
-        gators.right_gator.target_x = gators.cam.x + 128
-        gators.right_gator.distance = 1
-        gators.right_gator.x = gators.cam.x + 128
+        if gators.left_gator.x > gators.cam.x -16 then gators.left_gator.x -= 8 end
+        if gators.right_gator.x < gators.cam.x + 128 then gators.right_gator.x += 8 end
     end
 
     if t() - gators.anim_timer_start > gators.anim_timer_duration then
         gators.anim_timer_start = t()
         gators.anim_timer_duration = GATOR_CHOMP_SPEED
         gators.left_gator.anim_frame = gators.left_gator.anim_frame == 6 and 22 or 6
-        gators.right_gator.anim_frame = gators.left_gator.anim_frame == 6 and 22 or 6
+        gators.right_gator.anim_frame = gators.right_gator.anim_frame == 6 and 22 or 6
+    end
+
+    if t() - gators.hop_timer_start > gators.hop_timer_duration then
+        gators.hop_timer_start = t()
+        gators.hop_timer_duration = GATOR_HOP_SPEED
+        gators.left_gator.y = gators.left_gator.y == 128 - 15 and 128 - 19 or 128 - 15
+        gators.right_gator.y = gators.right_gator.y == 128 - 15 and 128 - 19 or 128 - 15
     end
 end
 
 function _gators_draw(gators)
     -- left gator
-    spr(gators.left_gator.anim_frame, gators.left_gator.x, 128 - 15, 2, 1)
+    spr(gators.left_gator.anim_frame, gators.left_gator.x, gators.left_gator.y, 2, 1)
 
     -- right gator
-    spr(gators.right_gator.anim_frame, gators.right_gator.x, 128 - 15, 2, 1, true)
+    spr(gators.right_gator.anim_frame, gators.right_gator.x, gators.right_gator.y, 2, 1, true)
 end
 
 function make_gators(bird, baby, cam)
@@ -72,6 +75,8 @@ function make_gators(bird, baby, cam)
         eating = false,
         anim_timer_start = t(),
         anim_timer_duration = GATOR_CHOMP_SPEED,
+        hop_timer_start = t(),
+        hop_timer_duration = GATOR_HOP_SPEED,
     }
 
     gators.left_gator = {

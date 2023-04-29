@@ -1,7 +1,9 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+#include collisions.lua
 #include constants.lua
+#include splash.lua
 #include gators.lua
 #include camera.lua
 #include world.lua
