@@ -15,14 +15,23 @@ function _get_baby_bird_y_offset(baby)
 end
 
 function _baby_update(baby, inputs)
+    if baby.dropped then
+        baby.x += baby.x_velocity
+        baby.y_velocity += GRAVITY
+        baby.y += baby.y_velocity
+    else
     baby.left = baby.bird.left
-    if baby.bird then
         baby.x = baby.bird.x + _get_baby_bird_x_offset(baby)
         baby.y = baby.bird.y + _get_baby_bird_y_offset(baby)
 
         if inputs.btn_x then
-            baby.targeting = true
+            if not baby.dropped then baby.targeting = true end
         else
+            if baby.targeting then 
+                baby.dropped = true
+                baby.x_velocity = baby.bird.x_velocity * 0.80
+                baby.y_velocity = 0
+            end
             baby.targeting = false
         end
     end
@@ -58,6 +67,7 @@ function make_baby(world, bird)
         left = false,
         sprite = 4,
         targeting = false,
+        dropped = false,
     }
 
     baby.x = _get_baby_bird_x_offset(baby)
