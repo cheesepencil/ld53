@@ -5,6 +5,7 @@ function _init()
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)
+    scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
 end
 
 function _update()
@@ -26,6 +27,7 @@ function _update()
     scene.bird:update(inputs)
     scene.baby:update(inputs)
     scene.cam:update()
+    scene.gators:update()
 end
 
 function _draw()
@@ -33,4 +35,5 @@ function _draw()
     scene.world:draw()
     scene.bird:draw()
     scene.baby:draw()
+    scene.gators:draw()
 end
