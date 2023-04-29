@@ -1,3 +1,23 @@
+# stork idea
+
+## movement
+* left/right change direction
+* ❎ flap
+* hold 🅾️ to aim (disables flap/directional controls)
+* release 🅾️ to drop baby
+
+## base elements
+* retrieve baby from baby generator (hot air balloon?)
+* avoid obstacles
+* drop baby in chimney
+
+## name ideas
+* Stork in 2023
+* Stork: Economic Anxiety Edition
+* Stork: Florida Edition
+* Bundle of Joy
+* Bundle Dumper: Florida Edition
+
 # first thoughts
 * pizza
 * babies
@@ -20,16 +40,3 @@
 * pregnant cat that fires kittens out of it like a shotgun
 * octopus that has to lay eggs in very specific places, avoid obstacles in water. `Squommy! (the squid mommy)`
 * stork in 2023
-
-# stork idea
-
-## movement
-* left/right change direction
-* ❎ flap
-* hold 🅾️ to aim (disables flap/directional controls)
-* release 🅾️ to drop baby
-
-## base elements
-* retrieve baby from baby generator (hot air balloon?)
-* avoid obstacles
-* drop baby in chimney

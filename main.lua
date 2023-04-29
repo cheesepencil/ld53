@@ -1,7 +1,7 @@
 scene = {}
 
 function _init()
-    scene.world = make_world(256)
+    scene.world = make_world(512)
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)

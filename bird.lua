@@ -20,7 +20,8 @@ function _bird_update(bird)
     end
     
     bird.y += bird.y_velocity
-    if bird.y > bird.world.height - 8 then bird.y = bird.world.height - 8 end
+    local min_altitude = bird.world.ground_level - 12
+    if bird.y > min_altitude then bird.y = min_altitude end
     
     -- bird x
     if btn(⬅️) then
