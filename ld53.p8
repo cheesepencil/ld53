@@ -1,6 +1,10 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+#include constants.lua
+#include world.lua
+#include bird.lua
+#include baby.lua
 #include main.lua
 __gfx__
 00000000000000000000000000000000000700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
