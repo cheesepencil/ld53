@@ -1,19 +1,22 @@
+scene = {}
+
 function _init()
-    world = make_world(256)
-    bird = make_bird(world)
-    baby = make_baby(world, bird)
+    scene.world = make_world(256)
+    scene.bird = make_bird(scene.world)
+    scene.cam = make_cam(scene.world, scene.bird)
+    scene.baby = make_baby(scene.world, scene.bird)
 end
 
 function _update()
-    world:update()
-    bird:update()
-    baby:update()
+    scene.world:update()
+    scene.bird:update()
+    scene.baby:update()
+    scene.cam:update()
 end
 
 function _draw()
-    camera(bird.x - 64, 0)
-    
-    world:draw()
-    bird:draw()
-    baby:draw()
+    scene.cam:draw()
+    scene.world:draw()
+    scene.bird:draw()
+    scene.baby:draw()
 end

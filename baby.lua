@@ -22,7 +22,7 @@ function _baby_update(baby)
 end
 
 function _baby_draw(baby)
-    spr(4, baby.x, baby.y, 1, 1, bird.left)
+    spr(4, baby.x, baby.y, 1, 1, baby.bird.left)
 end
 
 function make_baby(world, bird)

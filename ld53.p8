@@ -2,6 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
 #include constants.lua
+#include camera.lua
 #include world.lua
 #include bird.lua
 #include baby.lua
