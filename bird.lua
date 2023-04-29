@@ -1,11 +1,12 @@
-function _bird_update(bird)
+function _bird_update(bird, inputs)
+
     -- bird y    
     bird.y_velocity += GRAVITY
     if bird.y_velocity >= TERMINAL_VELOCITY then 
         bird.y_velocity = TERMINAL_VELOCITY 
     end
 
-    if btn(🅾️) then
+    if inputs.btn_o then
         if not bird.flapped then
             bird.flapped = true
             bird.y_velocity = -FLAP_POWER
@@ -28,9 +29,9 @@ function _bird_update(bird)
     end
     
     -- bird x
-    if btn(⬅️) then
+    if inputs.left then
         bird.left = true
-    elseif btn(➡️) then
+    elseif inputs.right then
         bird.left = false
     end
 
