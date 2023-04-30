@@ -153,6 +153,22 @@ function _scene_update(scene, inputs)
         end
     end
 
+    -- bird vs bullets
+    if scene.bird and #scene.redhats > 0 then
+        for redhat in all(scene.redhats) do
+            local broken = false
+            for bullet in all(redhat.bullets) do
+                local collision = collide_bird_vs_bullet(scene.bird, bullet)
+                if collision then
+                    _scene_kill_bird(scene)
+                    broken = true
+                    break
+                end
+            end
+            if broken then break end
+        end
+    end
+
     -- bird vs balloon
     if scene.bird and not scene.baby and collide_bird_vs_balloon(scene.bird, scene.balloon) then
         scene.baby = make_baby(scene.world, scene.bird)

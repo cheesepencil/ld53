@@ -1,10 +1,18 @@
 REDHAT_SHOOTING_COOLDOWNS = {1, 1.5, 2, 2.5}
 REDHAT_SHOOTING_DURATION = 0.5
 REDHAT_BULLET_COOLDOWN = 0.125
+REDHAT_MOVEMENT_SPEED = 1
 
 function _redhat_get_shoot_vector(redhat)
     local bird_center = {x = redhat.bird.x + 8, y = redhat.bird.y + 8}
     local redhat_center = {x = redhat.x + 8, y = redhat.y + 8}
+
+    -- a true marksman leads a moving target
+    if bird_center.x > redhat_center.x then
+        bird_center.x += 32
+    else
+        bird_center.x -= 32
+    end
 
     local big_vector = {
         x = bird_center.x - redhat_center.x,
@@ -19,6 +27,15 @@ function _redhat_get_shoot_vector(redhat)
     }
 
     return normalized_vector
+end
+
+function _redhat_in_range(redhat)
+    if redhat.x > redhat.cam.x - 32
+        and redhat.x < redhat.cam.x + 128 + 32 then
+            return true
+        else
+            return false
+        end
 end
 
 function _redhat_update(redhat)
@@ -36,7 +53,12 @@ function _redhat_update(redhat)
             })
         end
     else
-        if redhat.bird then
+        if redhat.bird and _redhat_in_range(redhat) then
+            if redhat.bird.x > redhat.x then redhat.flip = false else redhat.flip = true end
+            if redhat.x < redhat.bird.x then redhat.x += REDHAT_MOVEMENT_SPEED end
+            if redhat.x > redhat.bird.x then redhat.x -= REDHAT_MOVEMENT_SPEED end
+            redhat.x = redhat.x > redhat.max_x and redhat.max_x or redhat.x
+            redhat.x = redhat.x < redhat.min_x and redhat.min_x or redhat.x
             if t() >= redhat.next_shooting_begins then
                 redhat.shooting = true
                 redhat.shooting_ends = t() + REDHAT_SHOOTING_DURATION
@@ -46,8 +68,12 @@ function _redhat_update(redhat)
         else
             redhat.next_shooting_begins = t() + rnd(REDHAT_SHOOTING_COOLDOWNS)
         end
-        -- move here if the redhat should move
     end
+
+    local speed = 4
+    local amp = 2
+    local y_offset = sin(t() * speed) * amp
+    redhat.y = redhat.start_y + y_offset
 
     for bullet in all(redhat.bullets) do
         bullet.x += bullet.vector.x * 2.5
@@ -70,6 +96,8 @@ function make_redhat(min_x, max_x, cam, bird)
     redhat.min_x = min_x
     redhat.max_x = max_x
     redhat.x = min_x
+    redhat.target_x = max_x
+    redhat.start_y = 112
     redhat.y = 112
     redhat.bird = bird
     redhat.cam = cam

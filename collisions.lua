@@ -9,6 +9,23 @@ function _collide(a1, a2)
         end
 end
 
+function collide_bird_vs_bullet(bird, bullet)
+    local a1 = {
+        x = bird.x + 2,
+        w = 14,
+        y = bird.y + 4,
+        h = 4,
+    }
+    local a2 = {
+        x = bullet.x,
+        y = bullet.y,
+        h = 1,
+        w = 1,
+    }
+
+    return _collide(a1, a2)
+end
+
 function collide_bird_vs_gator(bird, gator)
     local a1 = {
         x = bird.x,
