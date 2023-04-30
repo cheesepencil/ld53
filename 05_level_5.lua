@@ -12,53 +12,86 @@ function make_level_5(start_time, lives)
 
     scene.tutorial = false
 
-    -- local x = 330 + 8
-    -- for i = 0, 12 do
-    --     add(scene.drones, make_drone({
-    --         x = x, 
-    --         x_amp = 40,
-    --         x_speed = 0.25,
-    --         x_delay = i / 25,
-    --         y = 120,
-    --         y_amp = 40,
-    --         y_speed = 0.25,
-    --         y_delay = i / 25,
-    --     }))
-    --     add(scene.drones, make_drone({
-    --         x = 409 + 8, 
-    --         x_amp = 40,
-    --         x_speed = 0.25,
-    --         x_delay = i / 25,
-    --         y = 120,
-    --         y_amp = 40,
-    --         y_speed = 0.25,
-    --         y_delay = i / 25,
-    --     }))
-    -- end
+    local x = 128
+    for i = 1, 16 do
+        add(scene.drones, make_drone({
+            x = x + i * 8, 
+            y = 0,
+            y_amp = 60,
+            y_speed = 0.25,
+            y_delay = i * 0.001
+        }))
+        add(scene.drones, make_drone({
+            x = x + i * 8, 
+            y = 120,
+            y_amp = 60,
+            y_speed = 0.25,
+            y_delay = i * 0.001
+        }))      
+    end
 
-    -- for i = 1, 3 do
-    --     add(scene.drones, make_drone({
-    --         x = 128 + 64,
-    --         x_amp = 60,
-    --         x_speed = 0.25,
-    --         x_delay = i / 25,
-    --         y = 64,
-    --         y_amp = -45,
-    --         y_speed = 0.125,
-    --         y_delay = i / 25,
-    --     }))
-    -- end
+    x = 388 + 16 + 4
+    local delay = 8
+    for i = 0, 7 do
+        add(scene.drones, make_drone({
+            x = x, 
+            x_amp = 40,
+            x_speed = 0.25,
+            x_delay = i / delay,
+            y = 120,
+            y_amp = 40,
+            y_speed = 0.25,
+            y_delay = i / delay,
+        }))
+        add(scene.drones, make_drone({
+            x = 512 - 10, 
+            x_amp = 20,
+            x_speed = 0.25,
+            x_delay = i / delay,
+            y = 120,
+            y_amp = 20,
+            y_speed = 0.25,
+            y_delay = i / delay,
+        }))
+        add(scene.drones, make_drone({
+            x = 512 - 10, 
+            x_amp = 20,
+            x_speed = 0.25,
+            x_delay = i / delay,
+            y = 16,
+            y_amp = 20,
+            y_speed = 0.25,
+            y_delay = i / delay,
+        }))
+    end
 
+    local x_offset = 16
+    local y_offset = 16
+    add(scene.drones, make_drone({
+        x = 537 + x_offset, 
+        y = 32 + y_offset,
+    }))
+    add(scene.drones, make_drone({
+        x = 537 + 64 + x_offset, 
+        y = 32+ y_offset - 11,
+    }))
+    add(scene.drones, make_drone({
+        x = 537 + 64 + x_offset, 
+        y = 32+ y_offset + 32 + 11,
+    }))
+    add(scene.drones, make_drone({
+        x = 537 + 64 * 2 + x_offset, 
+        y = 32+ y_offset + 8,
+    }))
 
-    -- add(scene.redhats, make_redhat(316 - 48, 316, scene.cam, scene.bird))
-    -- add(scene.redhats, make_redhat(409 + 16, 409 + 16 + 48, scene.cam, scene.bird))
-    
-    -- add(scene.redhats, make_redhat(570, 570 + 52, scene.cam, scene.bird))
-    -- add(scene.redhats, make_redhat(570 + 52, 570 + 52 * 2, scene.cam, scene.bird))
-    -- add(scene.redhats, make_redhat(570 + 52 * 2, 570 + 52 * 3, scene.cam, scene.bird))
-    -- -- add(scene.redhats, make_redhat(300, 415, scene.cam, scene.bird))
-    -- -- add(scene.redhats, make_redhat(440 + (610-440)\2 + 8, 610, scene.cam, scene.bird))
-    -- -- add(scene.redhats, make_redhat(440, 440 + (610-440)\2, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(196, 340, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(547, 547+66-8, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(547+66-8, 547+66*2-8, scene.cam, scene.bird))
+
+    add(scene.redhats, make_redhat(855-8,855-8, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(855-8-16,855-8-16, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(855-8-16*2,855-8-16*2, scene.cam, scene.bird))
+    add(scene.redhats, make_redhat(855-8-16*3,855-8-16*3, scene.cam, scene.bird))
 
     return scene
 end
