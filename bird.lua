@@ -1,5 +1,4 @@
 function _bird_update(bird, inputs)
-
     -- bird y    
     bird.y_velocity += GRAVITY
     if bird.y_velocity >= TERMINAL_VELOCITY then 

@@ -26,6 +26,24 @@ function collide_bird_vs_gator(bird, gator)
     return _collide(a1, a2)
 end
 
+function collide_bird_vs_drone(bird, drone)
+    local a1 = {
+        x = bird.x,
+        y = bird.y,
+        h = 6,
+        w = 16
+    }
+    local a2 = {
+        x = drone.x + 2,
+        y = drone.y + 2,
+        h = 4,
+        w = 4
+    }
+
+    return _collide(a1, a2)
+
+end
+
 function collide_baby_vs_house(baby, house)
     local a1 = {
         x = baby.x,

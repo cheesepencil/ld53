@@ -41,6 +41,7 @@ function _baby_update(baby, inputs)
 end
 
 function _draw_baby_trajectory(baby)
+    if not baby.bird then return end -- i don't feel like debugging the nullref here 
     line(baby.x, baby.y, baby.x, baby.y, 8)
     local x = baby.x
     local y = baby.y

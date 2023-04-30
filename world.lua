@@ -1,5 +1,13 @@
 function _world_update(world)
-    
+    local successes = 0
+    for goal in all(world.goals) do
+        if goal.success then 
+            successes += 1
+            goal.success_y += FLAG_RAISE_SPEED
+            if goal.success_y > FLAG_RAISE_MAX then goal.success_y = FLAG_RAISE_MAX end
+        end
+    end
+    world.successes = successes
 end
 
 function _world_draw(world)
@@ -21,6 +29,7 @@ function _world_draw(world)
 
     -- goal
     for goal in all(world.goals) do
+        spr(28, goal.x + 6, goal.y + 2 - goal.success_y)
         spr(8, goal.x, goal.y, 2, 2)
     end
 
@@ -39,16 +48,19 @@ function make_world(width, height, seed)
         width = width or 128 * 3, -- multiples of 128 please! 384 min
         height = height or 128,
         ground_level = 120,
-        shrubs = {}
+        shrubs = {},
+        goals = {},
+        successes = 0,
     }
 
-    world.goals = {}
     local goal_count = flr(world.width / 128) - 2
     for i = 1, goal_count do
         local goal_offset = flr(rnd(128 - 16 * 2) + 16)
         add(world.goals, {
             x = width - i * 128 + goal_offset,
             y = world.ground_level - 15,
+            success = false,
+            success_y = 0,
         })
     end
 
@@ -60,7 +72,7 @@ function make_world(width, height, seed)
                 x = ((i - 1) * 8) + flr(rnd(5)) * rnd({-1, 1}),
                 y = (world.ground_level - 8) + flr(rnd(9)),
                 rnd({true, false})
-            });
+            })
         end
     end
 
