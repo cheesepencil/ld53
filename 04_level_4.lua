@@ -1,7 +1,7 @@
 function make_level_4(start_time, lives)
     local config = {}
     config.start_time = start_time or t()
-    config.lives = lives or 99
+    config.lives = lives or 5
 
     config.size = 128 * 6
     config.seed = 4.444
