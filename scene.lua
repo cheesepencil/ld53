@@ -183,6 +183,7 @@ function _scene_draw(scene)
     if scene.tutorial then
         print("<- baby dispenser", 32 + 16, 32, 1)
         print("tap 🅾️ to flap", 72, 72, 1)
+        print("⬅️ and ➡️ to change direction", 72 - 10, 72 + 24, 1)
         print("hold ❎ to aim", 150, 32, 1)
         print("release ❎ to deliver...", 170, 42, 1)
         print("<- missed? get more babies", 178, 58, 1)
