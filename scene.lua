@@ -1,5 +1,5 @@
 function _scene_revive_bird(scene)
-    scene.bird = make_bird(scene.world)
+    scene.bird = make_bird(scene.world, scene.balloon.x + 8, scene.balloon.y + 16)
     scene.cam.bird = scene.bird
     scene.gators.bird = scene.bird
 end
@@ -18,7 +18,12 @@ function _scene_kill_bird(scene)
 end
 
 function _scene_kill_baby(scene)
-
+    local function clean_up(juice)
+        del(scene.juice, juice)
+    end
+    add(scene.juice, make_splash(scene.baby.x, scene.baby.y, 8, clean_up))
+    scene.baby = nil
+    scene.gators.baby = nil
 end
 
 function _scene_update(scene, inputs)
@@ -67,12 +72,7 @@ function _scene_update(scene, inputs)
 
     -- baby vs ground
     if scene.baby and scene.baby.y > 120 - 8 then
-        local function print_dead_and_die(juice)
-            del(scene.juice, juice)
-        end
-        add(scene.juice, make_splash(scene.baby.x, scene.baby.y, 8, print_dead_and_die))
-        scene.baby = nil
-        scene.gators.baby = nil
+        _scene_kill_baby(scene)
     end
 
     -- gators vs bird

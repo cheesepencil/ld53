@@ -56,12 +56,12 @@ function _bird_draw(bird)
     spr(bird.sprite, bird.x, bird.y, 2, 2, bird.left)
 end
 
-function make_bird(world)
+function make_bird(world, x, y)
     local bird = {
         world = world,
-        x = 24,
+        x = x or 24,
         x_velocity = 0,
-        y = 18,
+        y = y or 18,
         y_velocity = 0,
         left = false,
         flapped = false,
