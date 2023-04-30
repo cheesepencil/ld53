@@ -21,6 +21,7 @@ __lua__
 #include 02_level_2.lua
 #include 03_level_3.lua
 #include 04_level_4.lua
+#include 05_level_5.lua
 #include main.lua
 
 __gfx__

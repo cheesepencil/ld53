@@ -6,7 +6,7 @@ function make_level_4(start_time, lives)
     config.size = 128 * 6
     config.seed = 4.444
     config.retry_callback = make_level_4
-    config.next_level_callback = make_winner_scene
+    config.next_level_callback = make_level_5
 
     local scene = make_scene(config)
 
