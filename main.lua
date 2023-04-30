@@ -6,6 +6,7 @@ function _init()
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)
     scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
+    scene.balloon = make_balloon(0, 0)
     scene.juice = {}
 end
 
@@ -52,7 +53,7 @@ function _update()
         end
     end
 
-        -- baby vs ground
+    -- baby vs ground
     if scene.baby and scene.baby.y > 120 - 8 then
         local function print_dead_and_die(juice)
             del(scene.juice, juice)
@@ -73,6 +74,7 @@ function _update()
             add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, 8, print_dead_and_die))
             scene.bird = nil
             scene.gators.bird = nil
+            scene.baby.bird = nil
             scene.cam.bird = nil
         end
     end
@@ -81,6 +83,7 @@ end
 function _draw()
     scene.cam:draw()
     scene.world:draw()
+    scene.balloon:draw()
     if scene.bird then scene.bird:draw() end
     if scene.baby then scene.baby:draw() end
     scene.gators:draw()

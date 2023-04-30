@@ -15,12 +15,15 @@ function _get_baby_bird_y_offset(baby)
 end
 
 function _baby_update(baby, inputs)
+    if not baby.bird then
+        baby.dropped = true
+    end
     if baby.dropped then
         baby.x += baby.x_velocity
         baby.y_velocity += GRAVITY
         baby.y += baby.y_velocity
     else
-    baby.left = baby.bird.left
+        baby.left = baby.bird.left
         baby.x = baby.bird.x + _get_baby_bird_x_offset(baby)
         baby.y = baby.bird.y + _get_baby_bird_y_offset(baby)
 
