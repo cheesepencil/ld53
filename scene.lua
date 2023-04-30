@@ -3,6 +3,9 @@ function _scene_revive_bird(scene)
     scene.bird = make_bird(scene.world, scene.balloon.x + 8, scene.balloon.y + 16)
     scene.cam.bird = scene.bird
     scene.gators.bird = scene.bird
+    for redhat in all(scene.redhats) do
+        redhat.bird = scene.bird
+    end
 end
 
 function _scene_kill_bird(scene, color)
@@ -17,6 +20,9 @@ function _scene_kill_bird(scene, color)
     scene.gators.bird = nil
     if scene.baby then scene.baby.bird = nil end
     scene.cam.bird = nil
+    for redhat in all(scene.redhats) do
+        redhat.bird = nil
+    end
 end
 
 function _scene_kill_baby(scene, color)
@@ -66,6 +72,9 @@ function _scene_update(scene, inputs)
     scene.balloon:update()
     for drone in all(scene.drones) do
         drone:update()
+    end
+    for redhat in all(scene.redhats) do
+        redhat:update()
     end
     for juice in all(scene.juice) do
         juice:update()
@@ -175,6 +184,9 @@ function _scene_draw(scene)
     end
     for drone in all(scene.drones) do
         drone:draw()
+    end
+    for redhat in all(scene.redhats) do
+        redhat:draw()
     end
 
     local outline_color = 2

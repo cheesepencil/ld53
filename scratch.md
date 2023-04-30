@@ -6,10 +6,18 @@
 * hold 🅾️ to aim (disables flap/directional controls)
 * release 🅾️ to drop baby
 
+## mad dash
+* level 3
+* level 4
+* level 5
+* redhat
+* juice
+    * clouds
+
 ## base elements
-* retrieve baby from baby generator (hot air balloon?)
-* avoid obstacles
-* drop baby in chimney
+* ~~retrieve baby from baby generator (hot air balloon?)~~
+* ~~avoid obstacles~~
+* ~~drop baby in chimney~~
 
 ## name ideas
 * Stork in 2023
