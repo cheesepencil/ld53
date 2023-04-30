@@ -9,16 +9,16 @@ function _collide(a1, a2)
         end
 end
 
-function collide_long_bois(actor1, actor2)
+function collide_bird_vs_gator(bird, gator)
     local a1 = {
-        x = actor1.x,
-        y = actor1.y,
-        h = 8,
+        x = bird.x,
+        y = bird.y,
+        h = 6,
         w = 16
     }
     local a2 = {
-        x = actor2.x,
-        y = actor2.y,
+        x = gator.x - 2,
+        y = gator.y,
         h = 8,
         w = 16
     }

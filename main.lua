@@ -66,8 +66,8 @@ function _update()
 
     -- gators vs bird
     if scene.bird then
-        local bird_collision = collide_long_bois(scene.bird, scene.gators.left_gator)
-        bird_collision = bird_collision or collide_long_bois(scene.bird, scene.gators.right_gator)
+        local bird_collision = collide_bird_vs_gator(scene.bird, scene.gators.left_gator)
+        bird_collision = bird_collision or collide_bird_vs_gator(scene.bird, scene.gators.right_gator)
         if bird_collision then
             local function print_dead_and_die(juice)
                 del(scene.juice, juice)
@@ -88,8 +88,15 @@ function _update()
 end
 
 function _draw()
+    
     scene.cam:draw()
     scene.world:draw()
+
+    print("<-- get babies here", 32 + 16, 32, 1)
+    print("press 🅾️ to flap", 100, 64, 1)
+    print("hold ❎ to aim", 200, 72, 1)
+    print("release ❎ to deliver...", 270, 80, 1)
+
     scene.balloon:draw()
     if scene.bird then scene.bird:draw() end
     if scene.baby then scene.baby:draw() end
