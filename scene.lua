@@ -5,24 +5,26 @@ function _scene_revive_bird(scene)
     scene.gators.bird = scene.bird
 end
 
-function _scene_kill_bird(scene)
+function _scene_kill_bird(scene, color)
+    color = color or 8
     scene.revive_cooldown = true
     local function clean_up(juice)
         del(scene.juice, juice)
         if scene.lives > 0 then scene.revive_cooldown = false end
     end
-    add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, 8, clean_up))
+    add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, color, clean_up))
     scene.bird = nil
     scene.gators.bird = nil
     if scene.baby then scene.baby.bird = nil end
     scene.cam.bird = nil
 end
 
-function _scene_kill_baby(scene)
+function _scene_kill_baby(scene, color)
+    color = color or 8
     local function clean_up(juice)
         del(scene.juice, juice)
     end
-    add(scene.juice, make_splash(scene.baby.x, scene.baby.y, 8, clean_up))
+    add(scene.juice, make_splash(scene.baby.x, scene.baby.y, color, clean_up))
     scene.baby = nil
     scene.gators.baby = nil
 end
@@ -68,6 +70,7 @@ function _scene_update(scene, inputs)
     for juice in all(scene.juice) do
         juice:update()
     end
+    scene.sun:update(scene.bird)
 
     -- win
     if not scene.over and scene.world.successes == #scene.world.goals then
@@ -133,6 +136,14 @@ function _scene_update(scene, inputs)
         end
     end
 
+    -- bird vs sun
+    if scene.bird and scene.sun.danger then
+        _scene_kill_bird(scene, 0)
+        if scene.baby and not scene.baby.dropped then
+            _scene_kill_baby(scene, 0)
+        end
+    end
+
     -- bird vs balloon
     if scene.bird and not scene.baby and collide_bird_vs_balloon(scene.bird, scene.balloon) then
         scene.baby = make_baby(scene.world, scene.bird)
@@ -178,6 +189,8 @@ function _scene_draw(scene)
     print("storks: " .. scene.lives, scene.cam.x + 3 + 1,   2, outline_color)
     print("storks: " .. scene.lives, scene.cam.x + 3 - 1,   2, outline_color)
     print("storks: " .. scene.lives, scene.cam.x + 3,       2, text_color)
+
+    scene.sun:draw(scene.cam)
 
     if scene.over and scene.won then
         fancy_text({
@@ -269,6 +282,7 @@ function make_scene(config)
     scene.baby = make_baby(scene.world, scene.bird)
     scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
     scene.balloon = make_balloon(16, 16)
+    scene.sun = make_sun()
     scene.drones = {}
     scene.juice = {}
 

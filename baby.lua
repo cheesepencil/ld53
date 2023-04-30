@@ -32,7 +32,7 @@ function _baby_update(baby, inputs)
         else
             if baby.targeting then 
                 baby.dropped = true
-                baby.x_velocity = baby.bird.x_velocity * 0.80
+                baby.x_velocity = baby.bird.x_velocity * BABY_TOSS_VELOCITY_MODIFIER
                 baby.y_velocity = 0
             end
             baby.targeting = false
@@ -46,7 +46,7 @@ function _draw_baby_trajectory(baby)
     local x = baby.x
     local y = baby.y
     local y_velocity = 0 
-    local x_velocity = baby.bird.x_velocity * 0.80
+    local x_velocity = baby.bird.x_velocity * BABY_TOSS_VELOCITY_MODIFIER
     for i = 0, 90 do
         x = x + x_velocity
         y_velocity += GRAVITY

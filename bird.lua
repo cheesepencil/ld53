@@ -22,9 +22,8 @@ function _bird_update(bird, inputs)
     bird.y += bird.y_velocity
     local min_altitude = bird.world.ground_level - 12
     if bird.y > min_altitude then bird.y = min_altitude end
-    local max_altitude = -6
-    if bird.y <= max_altitude then 
-        bird.y = max_altitude 
+    if bird.y <= BIRD_MAX_ALTITUDE then 
+        bird.y = BIRD_MAX_ALTITUDE 
     end
     
     -- bird x
