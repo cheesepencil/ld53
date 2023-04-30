@@ -1,7 +1,11 @@
 scene = {}
 
+function change_scene(new_scene)
+    scene = new_scene
+end
+
 function _init()
-    scene = make_tutorial_level()
+    scene = make_title_scene()
 end
 
 function _update()

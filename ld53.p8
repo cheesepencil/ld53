@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+#include fancy_text.lua
 #include drone.lua
 #include balloon.lua
 #include collisions.lua
@@ -12,7 +13,8 @@ __lua__
 #include bird.lua
 #include baby.lua
 #include scene.lua
-#include 00_tutorial.lua
+#include 00_title.lua
+#include 01_tutorial.lua
 #include main.lua
 __gfx__
 00000000000000000000000000000000000700000000000000000000000000000000000055551000000000eeee00000000000000000000000000000000000000

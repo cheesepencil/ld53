@@ -1,4 +1,5 @@
 function _scene_revive_bird(scene)
+    scene.lives -= 1
     scene.bird = make_bird(scene.world, scene.balloon.x + 8, scene.balloon.y + 16)
     scene.cam.bird = scene.bird
     scene.gators.bird = scene.bird
@@ -8,7 +9,7 @@ function _scene_kill_bird(scene)
     scene.revive_cooldown = true
     local function clean_up(juice)
         del(scene.juice, juice)
-        scene.revive_cooldown = false
+        if scene.lives > 0 then scene.revive_cooldown = false end
     end
     add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, 8, clean_up))
     scene.bird = nil
@@ -27,6 +28,7 @@ function _scene_kill_baby(scene)
 end
 
 function _scene_update(scene, inputs)
+    -- scene level input
     if inputs.btn_x then
         inputs.left = false
         inputs.right = false
@@ -35,12 +37,21 @@ function _scene_update(scene, inputs)
 
     if not scene.bird 
         and not scene.revive_cooldown 
+        and not scene.over
         and inputs.btn_o then 
             _scene_revive_bird(scene) 
         end
 
+    if scene.over and t() - scene.input_cooldown_timer_start > SCENE_ADVANCE_COOLDOWN_DURATION and inputs.btn_o then
+        if scene.won then
+            change_scene(make_title_scene())
+        elseif scene.lost then
+            change_scene(make_title_scene())
+        end
+    end
+
     scene.world:update()
-    if scene.bird then scene.bird:update(inputs) end
+    if scene.bird and not scene.over then scene.bird:update(inputs) end
     if scene.baby then scene.baby:update(inputs) end
     scene.cam:update()
     scene.gators:update()
@@ -52,12 +63,24 @@ function _scene_update(scene, inputs)
         juice:update()
     end
 
-        -- game state
-    -- -- win conditions
+    -- win
+    if not scene.over and scene.world.successes == #scene.world.goals then
+        scene.over = true
+        scene.won = true
+        scene.input_cooldown_timer_start = t()
+    end
 
-    -- -- loss conditions
+    -- loss
+    if not scene.over 
+        and not scene.won
+        and not scene.bird
+        and scene.lives == 0 then
+            scene.over = true
+            scene.lost = true
+            scene.input_cooldown_timer_start = t()
+    end
 
-    -- -- collisions
+    -- collisions
     -- baby vs house
     if scene.baby then
         for goal in all(scene.world.goals) do
@@ -113,6 +136,7 @@ function _scene_draw(scene)
         print("and other hazards", 128 * 3 - 72 - 24, 72, 1)
         print("deliver baby here -->", 128 * 3 - 100 - 10, 110)
     end
+
     scene.balloon:draw()
     if scene.bird then scene.bird:draw() end
     if scene.baby then scene.baby:draw() end
@@ -124,7 +148,54 @@ function _scene_draw(scene)
         drone:draw()
     end
 
-    print("babies delivered: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 32, 1, 7)
+    local outline_color = 2
+    local text_color = 7
+    print("deliveries: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 66 - 1,   2, outline_color)
+    print("deliveries: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 66 + 1,   2, outline_color)
+    print("deliveries: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 66,       2 + 1, outline_color)
+    print("deliveries: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 66,       2 - 1, outline_color)
+    print("deliveries: " .. scene.world.successes .. "/" .. #scene.world.goals, scene.cam.x + 66,       2, text_color)
+    print("storks: " .. scene.lives, scene.cam.x + 3,       2 - 1, outline_color)
+    print("storks: " .. scene.lives, scene.cam.x + 3,       2 + 1, outline_color)
+    print("storks: " .. scene.lives, scene.cam.x + 3 + 1,   2, outline_color)
+    print("storks: " .. scene.lives, scene.cam.x + 3 - 1,   2, outline_color)
+    print("storks: " .. scene.lives, scene.cam.x + 3,       2, text_color)
+
+    if scene.over and scene.won then
+        fancy_text({
+            text = "complete!",
+            text_colors = { 11 },
+            background_color = 7,
+            bubble_depth = 2,
+            x = scene.cam.x + 13,
+            y = 58,
+            outline_color = 0,
+            wiggle = {
+                amp = 1.25,
+                speed = 1.5,
+                offset = 0.33
+            },
+            letter_width = 12,
+            big = true
+        })
+    elseif scene.over and scene.lost then
+        fancy_text({
+            text = "game over",
+            text_colors = { 8 },
+            background_color = 7,
+            bubble_depth = 2,
+            x = scene.cam.x + 13,
+            y = 58,
+            outline_color = 0,
+            wiggle = {
+                amp = 1.25,
+                speed = 1.5,
+                offset = 0.33
+            },
+            letter_width = 12,
+            big = true
+        })
+    end
 end
 
 function make_scene(size, seed)
@@ -132,8 +203,13 @@ function make_scene(size, seed)
     size = size or 128 * 3
     local scene = {}
 
+    scene.over = false
+    scene.won = false
+    scene.lost = false
+    scene.lives = 4
     scene.start_time = t()
     scene.revive_cooldown = false
+    scene.scene_advance_cooldown = false
     scene.world = make_world(size, seed)
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
