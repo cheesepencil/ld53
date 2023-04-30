@@ -83,6 +83,7 @@ function _scene_update(scene, inputs)
 
     -- win
     if not scene.over and scene.world.successes == #scene.world.goals then
+        sfx(6)
         scene.over = true
         scene.won = true
         scene.input_cooldown_timer_start = t()
@@ -93,6 +94,7 @@ function _scene_update(scene, inputs)
         and not scene.won
         and not scene.bird
         and scene.lives == 0 then
+            sfx(7)
             scene.over = true
             scene.lost = true
             scene.input_cooldown_timer_start = t()
@@ -113,6 +115,8 @@ function _scene_update(scene, inputs)
 
     -- baby vs ground
     if scene.baby and scene.baby.y > 120 - 8 then
+        sfx(4)
+        sfx(2)
         _scene_kill_baby(scene)
     end
 
@@ -121,6 +125,8 @@ function _scene_update(scene, inputs)
         for drone in all(scene.drones) do
             local collision = collide_bird_vs_drone(scene.baby, drone)
             if collision then
+                sfx(4)
+                sfx(5)
                 _scene_kill_baby(scene)
                 break
             end
@@ -131,7 +137,10 @@ function _scene_update(scene, inputs)
     if scene.bird and not DEBUG then
         local bird_collision = collide_bird_vs_gator(scene.bird, scene.gators.left_gator)
         bird_collision = bird_collision or collide_bird_vs_gator(scene.bird, scene.gators.right_gator)
-        if bird_collision then _scene_kill_bird(scene) end
+        if bird_collision then 
+            sfx(2)
+            _scene_kill_bird(scene)
+        end
     end
 
     -- drone vs bird
@@ -139,6 +148,7 @@ function _scene_update(scene, inputs)
         for drone in all(scene.drones) do
             local collision = collide_bird_vs_drone(scene.bird, drone)
             if collision then
+                sfx(5)
                 _scene_kill_bird(scene)
                 break
             end
@@ -147,6 +157,7 @@ function _scene_update(scene, inputs)
 
     -- bird vs sun
     if scene.bird and scene.sun.danger and not DEBUG then
+        sfx(5)
         _scene_kill_bird(scene, 0)
         if scene.baby and not scene.baby.dropped then
             _scene_kill_baby(scene, 0)

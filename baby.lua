@@ -31,6 +31,7 @@ function _baby_update(baby, inputs)
             if not baby.dropped then baby.targeting = true end
         else
             if baby.targeting then 
+                sfx(1)
                 baby.dropped = true
                 baby.x_velocity = baby.bird.x_velocity * BABY_TOSS_VELOCITY_MODIFIER
                 baby.y_velocity = 0
@@ -61,6 +62,8 @@ function _baby_draw(baby)
 end
 
 function make_baby(world, bird)
+    sfx(3)
+
     local baby = {
         bird = bird,
         world = world,

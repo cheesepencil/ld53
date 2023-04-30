@@ -7,6 +7,7 @@ function _bird_update(bird, inputs)
 
     if inputs.btn_o then
         if not bird.flapped then
+            sfx(0)
             bird.flapped = true
             bird.y_velocity = -FLAP_POWER
             bird.x_velocity += FLAP_POWER * (bird.left and -1 or 1)
