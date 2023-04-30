@@ -64,6 +64,12 @@ function make_world(width, height, seed)
         })
     end
 
+    if DEBUG then
+        for goal in all(world.goals) do
+            printh("goal at: " .. goal.x)
+        end
+    end
+
     local shrub_count = world.width // 8
     for i = 1, shrub_count + 1 do
         for j = 1, 2 do

@@ -42,11 +42,17 @@ function _scene_update(scene, inputs)
             _scene_revive_bird(scene) 
         end
 
-    if scene.over and t() - scene.input_cooldown_timer_start > SCENE_ADVANCE_COOLDOWN_DURATION and inputs.btn_o then
+    if scene.over and t() - scene.input_cooldown_timer_start > SCENE_ADVANCE_COOLDOWN_DURATION then
         if scene.won then
-            change_scene(make_title_scene())
+            if inputs.btn_o then
+                next_level = scene.next_level_callback(scene.start_time, scene.lives)
+                change_scene(next_level) 
+            end
         elseif scene.lost then
-            change_scene(make_title_scene())
+            if inputs.btn_x then change_scene(scene.retry_callback()) end
+            if inputs.btn_o then
+                change_scene(scene.retry_callback(scene.start_time))
+            end
         end
     end
 
@@ -82,7 +88,7 @@ function _scene_update(scene, inputs)
 
     -- collisions
     -- baby vs house
-    if scene.baby then
+    if scene.baby and scene.baby.dropped then
         for goal in all(scene.world.goals) do
             if not goal.success and collide_baby_vs_house(scene.baby, goal) then
                 goal.success = true
@@ -98,15 +104,26 @@ function _scene_update(scene, inputs)
         _scene_kill_baby(scene)
     end
 
+    -- baby vs drone
+    if scene.baby and not DEBUG then
+        for drone in all(scene.drones) do
+            local collision = collide_bird_vs_drone(scene.baby, drone)
+            if collision then
+                _scene_kill_baby(scene)
+                break
+            end
+        end
+    end
+
     -- gators vs bird
-    if scene.bird then
+    if scene.bird and not DEBUG then
         local bird_collision = collide_bird_vs_gator(scene.bird, scene.gators.left_gator)
         bird_collision = bird_collision or collide_bird_vs_gator(scene.bird, scene.gators.right_gator)
         if bird_collision then _scene_kill_bird(scene) end
     end
 
     -- drone vs bird
-    if scene.bird then
+    if scene.bird and not DEBUG then
         for drone in all(scene.drones) do
             local collision = collide_bird_vs_drone(scene.bird, drone)
             if collision then
@@ -128,13 +145,14 @@ function _scene_draw(scene)
     scene.world:draw()
 
     if scene.tutorial then
-        print("<-- get babies here", 32 + 16, 32, 1)
+        print("<- baby dispenser", 32 + 16, 32, 1)
         print("tap 🅾️ to flap", 72, 72, 1)
         print("hold ❎ to aim", 150, 32, 1)
         print("release ❎ to deliver...", 170, 42, 1)
+        print("<- missed? get more babies", 178, 58, 1)
         print("avoid drones", 128 * 3 - 72 - 24, 64, 1)
         print("and other hazards", 128 * 3 - 72 - 24, 72, 1)
-        print("deliver baby here -->", 128 * 3 - 100 - 10, 110)
+        print("deliver baby here ->", 128 * 3 - 100 - 10, 110)
     end
 
     scene.balloon:draw()
@@ -178,6 +196,14 @@ function _scene_draw(scene)
             letter_width = 12,
             big = true
         })
+        fancy_text({
+            text = "press 🅾️  to continue!",
+            x = scene.cam.x + 32 - 6,
+            y = 127 - 32,
+            background_color = 13,
+            text_colors = { 10 },
+            outline_color = 0
+        })
     elseif scene.over and scene.lost then
         fancy_text({
             text = "game over",
@@ -195,22 +221,49 @@ function _scene_draw(scene)
             letter_width = 12,
             big = true
         })
+        fancy_text({
+            text = "🅾️  retry",
+            x = scene.cam.x + 32 - 6,
+            y = 127 - 32,
+            background_color = 13,
+            text_colors = { 10 },
+            outline_color = 0
+        })
+        fancy_text({
+            text = "❎  give up",
+            x = scene.cam.x + 32 - 6 + 6 * 8,
+            y = 127 - 32,
+            background_color = 13,
+            text_colors = { 10 },
+            outline_color = 0
+        })
+    end
+    if scene.start_time and DEBUG then
+        print(tostr(t() - scene.start_time), scene.cam.x + 2, 10, 0)
     end
 end
 
-function make_scene(size, seed)
-    seed = seed or 1234
-    size = size or 128 * 3
+function make_scene(config)
+    config = config or {}
+    config.seed = config.seed or 1234 -- tutorial
+    config.size = config.size or 128 * 3 -- tutorial
+    config.start_time = config.start_time or t()
+    config.lives = config.lives or 5
+    config.retry_callback = config.retry_callback or make_title_scene
+    config.next_level_callback = config.next_level_callback or make_title_scene
     local scene = {}
 
+    scene.retry_callback = config.retry_callback
+    scene.next_level_callback = config.next_level_callback
     scene.over = false
     scene.won = false
     scene.lost = false
-    scene.lives = 4
-    scene.start_time = t()
+    scene.lives = config.lives
+    scene.start_time = config.start_time
     scene.revive_cooldown = false
     scene.scene_advance_cooldown = false
-    scene.world = make_world(size, seed)
+
+    scene.world = make_world(config.size, config.seed)
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)

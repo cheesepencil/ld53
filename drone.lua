@@ -1,8 +1,8 @@
 function _drone_update(drone)
-    local x_offset = sin(t() * drone.x_speed) * drone.x_amp
+    local x_offset = sin(t() * drone.x_speed + drone.x_delay) * drone.x_amp
     drone.x = drone.start_x + x_offset
     
-    local y_offset = cos(t() * drone.y_speed) * drone.y_amp
+    local y_offset = cos(t() * drone.y_speed + drone.y_delay) * drone.y_amp
     drone.y = drone.start_y + y_offset
 
     if t() - drone.anim_timer_start > drone.anim_timer_duration then
@@ -15,16 +15,28 @@ function _drone_draw(drone)
     spr(drone.anim_frame, drone.x, drone.y)
 end
 
-function make_drone(x, y, x_amp, x_speed, y_amp, y_speed)
+function make_drone(config)
+    config = config or {}
+    config.x = config.x or 64
+    config.x_amp = config.x_amp or 0
+    config.x_speed = config.x_speed or 0
+    config.x_delay = config.x_delay or 0
+    config.y = config.y or 64
+    config.y_amp = config.y_amp or 0
+    config.y_speed = config.y_speed or 0
+    config.y_delay = config.y_delay or 0
+
     local drone = {
-        x = x,
-        y = y,
-        start_x = x,
-        start_y = y,
-        x_amp = x_amp,
-        x_speed = x_speed,
-        y_amp = y_amp,
-        y_speed = y_speed,
+        x = config.x,
+        y = config.y,
+        start_x = config.x,
+        start_y = config.y,
+        x_amp = config.x_amp,
+        x_speed = config.x_speed,
+        x_delay = config.x_delay,
+        y_amp = config.y_amp,
+        y_speed = config.y_speed,
+        y_delay = config.y_delay,
         anim_timer_start = t(),
         anim_timer_duration = DRONE_BLINK_SPEED,
         anim_frame = 12,
