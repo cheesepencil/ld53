@@ -171,6 +171,7 @@ function _scene_update(scene, inputs)
             for bullet in all(redhat.bullets) do
                 local collision = collide_bird_vs_bullet(scene.bird, bullet)
                 if collision then
+                    sfx(9)
                     _scene_kill_bird(scene)
                     broken = true
                     break

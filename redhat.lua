@@ -44,6 +44,7 @@ function _redhat_update(redhat)
             redhat.shooting = false
             redhat.next_shooting_begins = t() + rnd(REDHAT_SHOOTING_COOLDOWNS)
         elseif t() >= redhat.next_bullet_begins then
+            sfx(8)
             redhat.next_bullet_begins = t() + REDHAT_BULLET_COOLDOWN
             add(redhat.bullets, {
                 x = redhat.x + 8,
