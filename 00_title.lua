@@ -54,7 +54,7 @@ function _title_draw(scene)
     spr(scene.l_chomp_sprite, 18, y + 8 , 2, 1)
     spr(scene.r_chomp_sprite, 128 - 16 - 18, y + 8, 2, 1, true)
 
-    y = 64 - 16 + 48
+    local y = 64 - 16 + 48
     print('ludum dare 53 - "delivery"', 10, y + 2, 1)
     print("by cheesepencil", 32, y + 8, 1)
 
