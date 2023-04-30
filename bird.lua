@@ -9,6 +9,7 @@ function _bird_update(bird, inputs)
         if not bird.flapped then
             bird.flapped = true
             bird.y_velocity = -FLAP_POWER
+            bird.x_velocity += FLAP_POWER * (bird.left and -1 or 1)
             bird.flapped_at = t()
             bird.sprite = 2
         end
