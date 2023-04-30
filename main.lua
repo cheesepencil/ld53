@@ -6,7 +6,7 @@ function _init()
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)
     scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
-    scene.balloon = make_balloon(0, 0)
+    scene.balloon = make_balloon(16, 16)
     scene.juice = {}
 end
 
@@ -31,6 +31,7 @@ function _update()
     if scene.baby then scene.baby:update(inputs) end
     scene.cam:update()
     scene.gators:update()
+    scene.balloon:update()
     for juice in all(scene.juice) do
         juice:update()
     end
@@ -41,8 +42,8 @@ function _update()
     -- -- loss conditions
 
     -- -- collisions
+    -- baby vs house
     if scene.baby then
-        -- baby vs house
         for goal in all(scene.world.goals) do
             if not goal.success and collide_baby_vs_house(scene.baby, goal) then
                 goal.success = true
@@ -74,9 +75,15 @@ function _update()
             add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, 8, print_dead_and_die))
             scene.bird = nil
             scene.gators.bird = nil
-            scene.baby.bird = nil
+            if scene.baby then scene.baby.bird = nil end
             scene.cam.bird = nil
         end
+    end
+
+    -- bird vs balloon
+    if scene.bird and not scene.baby and collide_bird_vs_balloon(scene.bird, scene.balloon) then
+        scene.baby = make_baby(scene.world, scene.bird)
+        scene.gators.baby = scene.baby
     end
 end
 

@@ -60,9 +60,9 @@ end
 function make_bird(world)
     local bird = {
         world = world,
-        x = 0,
+        x = 24,
         x_velocity = 0,
-        y = 0,
+        y = 18,
         y_velocity = 0,
         left = false,
         flapped = false,

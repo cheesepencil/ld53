@@ -12,7 +12,7 @@ function _world_draw(world)
     rectfill(0, world.ground_level, world.width, 127, 4)
 
     -- grass
-    rectfill(0, world.ground_level, world.width, world.ground_level + 1, 11)
+    rectfill(0, world.ground_level, world.width, world.ground_level + 1, 5)
 
     -- shrubs
     for shrub in all(world.shrubs) do
