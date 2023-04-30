@@ -283,6 +283,13 @@ function _scene_draw(scene)
         print(tostr(t() - scene.start_time), scene.cam.x + 2, 22, 0)
         print("bird x: " .. (scene.bird and scene.bird.x or "no bird"), scene.cam.x + 2, 14)
     end
+
+    if DEBUG and btnp(⬇️) then
+        printh("bird at: " .. (scene.bird and flr(scene.bird.x) or "no bird..."))
+    end
+    if DEBUG and btnp(⬆️) and scene.bird then
+        scene.bird.update = function() printh() end
+    end
 end
 
 function make_scene(config)

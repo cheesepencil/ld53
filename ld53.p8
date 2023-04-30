@@ -19,6 +19,7 @@ __lua__
 #include 00_title.lua
 #include 01_tutorial.lua
 #include 02_level_2.lua
+#include 03_level_3.lua
 #include main.lua
 
 __gfx__
