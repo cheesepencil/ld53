@@ -10,7 +10,7 @@
 * level 3
 * level 4
 * level 5
-* redhat
+* ~~redhat~~
 * juice
     * clouds
 

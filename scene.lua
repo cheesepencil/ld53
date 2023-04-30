@@ -146,7 +146,7 @@ function _scene_update(scene, inputs)
     end
 
     -- bird vs sun
-    if scene.bird and scene.sun.danger then
+    if scene.bird and scene.sun.danger and not DEBUG then
         _scene_kill_bird(scene, 0)
         if scene.baby and not scene.baby.dropped then
             _scene_kill_baby(scene, 0)
@@ -154,7 +154,7 @@ function _scene_update(scene, inputs)
     end
 
     -- bird vs bullets
-    if scene.bird and #scene.redhats > 0 then
+    if scene.bird and #scene.redhats > 0 and not DEBUG then
         for redhat in all(scene.redhats) do
             local broken = false
             for bullet in all(redhat.bullets) do
@@ -280,7 +280,8 @@ function _scene_draw(scene)
         })
     end
     if scene.start_time and DEBUG then
-        print(tostr(t() - scene.start_time), scene.cam.x + 2, 10, 0)
+        print(tostr(t() - scene.start_time), scene.cam.x + 2, 22, 0)
+        print("bird x: " .. (scene.bird and scene.bird.x or "no bird"), scene.cam.x + 2, 14)
     end
 end
 

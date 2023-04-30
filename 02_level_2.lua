@@ -37,6 +37,10 @@ function make_level_2(start_time, lives)
         }))
     end
 
+    scene.redhats = {
+        make_redhat(400, 475, scene.cam, scene.bird)
+    }
+
     -- for i = 1, 6 do
     --     add(scene.drones, make_drone({
     --         y_amp = -48,
