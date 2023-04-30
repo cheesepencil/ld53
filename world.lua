@@ -59,6 +59,7 @@ function make_world(width, height, seed)
                 sprite = rnd({5, 20, 21}),
                 x = ((i - 1) * 8) + flr(rnd(5)) * rnd({-1, 1}),
                 y = (world.ground_level - 8) + flr(rnd(9)),
+                rnd({true, false})
             });
         end
     end

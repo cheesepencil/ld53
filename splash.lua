@@ -34,7 +34,7 @@ function make_splash(x, y, color, callback)
 
     splash.particles = {}
 
-    for i = 1, 50 do
+    for i = 1, 100 do
         local velocity_x = (rnd(1) > 0.5 and -1 or 1) * rnd(4)
         local velocity_y = -rnd(5)
         local radius = _splash_get_random_radius()
@@ -47,7 +47,7 @@ function make_splash(x, y, color, callback)
             throb_timer_start = t(),
         })
     end
-    for i = 1, 50 do
+    for i = 1, 100 do
         local velocity_x = (rnd(1) > 0.5 and -1 or 1) * rnd(1)
         local velocity_y = -rnd(3)
         local radius = _splash_get_random_radius()

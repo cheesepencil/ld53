@@ -1,7 +1,7 @@
 scene = {}
 
 function _init()
-    scene.world = make_world(512 - 128, 1234)
+    scene.world = make_world(128 * 3, 1234)
     scene.bird = make_bird(scene.world)
     scene.cam = make_cam(scene.world, scene.bird)
     scene.baby = make_baby(scene.world, scene.bird)
@@ -73,6 +73,7 @@ function _update()
             add(scene.juice, make_splash(scene.bird.x + 8, scene.bird.y + 4, 8, print_dead_and_die))
             scene.bird = nil
             scene.gators.bird = nil
+            scene.cam.bird = nil
         end
     end
 end

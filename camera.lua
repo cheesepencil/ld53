@@ -1,11 +1,11 @@
 function _cam_update(cam)
-    local target_cam_x = cam.bird.x + _get_cam_target_offset(cam)
+    local target_cam_x = cam.bird and cam.bird.x + _get_cam_target_offset(cam) or cam.x
     cam.y = 0
 
-    if (cam.bird.left) then
+    if (cam.bird and cam.bird.left) then
         cam.x += cam.bird.x_velocity - cam.speed / 3
         if cam.x < target_cam_x then cam.x = target_cam_x end
-    else
+    elseif (cam.bird) then
         cam.x += cam.bird.x_velocity + cam.speed / 3
         if cam.x > target_cam_x then cam.x = target_cam_x end
     end
