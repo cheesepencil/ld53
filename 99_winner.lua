@@ -48,7 +48,7 @@ function _winner_draw(scene)
     local minutes = flr(scene.elapsed_time / 60)
     local seconds = flr(scene.elapsed_time) % 60
     print("elapsed time:", 10, y + 2, 1)
-    print(minutes .. "m " .. seconds .. "s", 32, y + 8, 1)
+    print(minutes .. "' " .. seconds .. '"', 32, y + 8, 1)
 
     fancy_text({
         text = "press 🅾️  to retry!",

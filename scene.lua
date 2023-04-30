@@ -311,6 +311,7 @@ function make_scene(config)
     scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
     scene.balloon = make_balloon(16, 16)
     scene.sun = make_sun()
+    scene.redhats = {}
     scene.drones = {}
     scene.juice = {}
 
