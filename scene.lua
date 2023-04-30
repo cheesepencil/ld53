@@ -57,7 +57,7 @@ function _scene_update(scene, inputs)
                 change_scene(next_level) 
             end
         elseif scene.lost then
-            if inputs.btn_x then change_scene(scene.retry_callback()) end
+            if inputs.btn_x then change_scene(make_title_scene()) end
             if inputs.btn_o then
                 change_scene(scene.retry_callback(scene.start_time))
             end
