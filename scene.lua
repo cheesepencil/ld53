@@ -105,6 +105,7 @@ function _scene_update(scene, inputs)
     if scene.baby and scene.baby.dropped then
         for goal in all(scene.world.goals) do
             if not goal.success and collide_baby_vs_house(scene.baby, goal) then
+                sfx(10)
                 goal.success = true
                 scene.baby = nil
                 scene.gators.baby = nil
