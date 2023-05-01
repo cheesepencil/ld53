@@ -7,9 +7,9 @@
 * release 🅾️ to drop baby
 
 ## mad dash
-* level 3
-* level 4
-* level 5
+* ~~level 3~~
+* ~~level 4~~
+* ~~level 5~~
 * ~~redhat~~
 * juice
     * clouds
