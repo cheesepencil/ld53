@@ -18,9 +18,31 @@ function _drone_update(drone, drone_cycle_start)
         drone.anim_timer_start = t()
         drone.anim_frame = drone.anim_frame == 12 and 13 or 12
     end
+
+    if t() > drone.create_puff_after then
+        function del_puff(puff_to_del)
+            del(drone.puffs, puff_to_del)
+        end
+
+        local puff = make_puff({
+            x = drone.x + 2 + rnd({0,1}),
+            y = drone.y + 2 + rnd({0,1}),
+            radius = 2.5,
+            callback = del_puff
+        })
+        add(drone.puffs, puff)
+    end
+
+    for puff in all(drone.puffs) do
+        puff:update()
+    end
 end
 
 function _drone_draw(drone)
+    for puff in all(drone.puffs) do
+        puff:draw()
+    end
+
     spr(drone.anim_frame, drone.x, drone.y)
 end
 
@@ -54,6 +76,8 @@ function make_drone(config)
     drone.update = _drone_update
     drone.draw = _drone_draw
     drone.get_hitbox = _drone_get_hitbox
+    drone.create_puff_after = t()
+    drone.puffs = {}
 
     return drone
 end

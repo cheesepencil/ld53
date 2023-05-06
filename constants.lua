@@ -14,3 +14,9 @@ BIRD_MAX_ALTITUDE = -6
 SCENE_ADVANCE_COOLDOWN_DURATION = 0.5
 BABY_TOSS_VELOCITY_MODIFIER = 0.33
 DEBUG = false
+
+function do_nothing() 
+    printh()
+end
+
+EMPTY_FUNCTION = do_nothing

@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 41
 __lua__
+#include puff.lua
 #include redhat.lua
 #include sun.lua
 #include fancy_text.lua
