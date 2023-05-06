@@ -1,8 +1,17 @@
-function _drone_update(drone)
-    local x_offset = sin(t() * drone.x_speed + drone.x_delay) * drone.x_amp
+function _drone_get_hitbox(drone)
+    return {
+        x = drone.x,
+        y = drone.y + 1,
+        w = 7,
+        h = 3
+    }
+end
+
+function _drone_update(drone, drone_cycle_start)
+    local x_offset = sin((t() - drone_cycle_start) * drone.x_speed + drone.x_delay) * drone.x_amp
     drone.x = drone.start_x + x_offset
     
-    local y_offset = cos(t() * drone.y_speed + drone.y_delay) * drone.y_amp
+    local y_offset = cos((t() - drone_cycle_start) * drone.y_speed + drone.y_delay) * drone.y_amp
     drone.y = drone.start_y + y_offset
 
     if t() - drone.anim_timer_start > drone.anim_timer_duration then
@@ -44,6 +53,7 @@ function make_drone(config)
 
     drone.update = _drone_update
     drone.draw = _drone_draw
+    drone.get_hitbox = _drone_get_hitbox
 
     return drone
 end

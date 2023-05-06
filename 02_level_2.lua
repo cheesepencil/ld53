@@ -18,7 +18,7 @@ function make_level_2(start_time, lives)
     for i = 0, 10 do
         add(scene.drones, make_drone({
             x = x + i * 8, 
-            y = 32,
+            y = 32-8,
             y_amp = 24,
             y_speed = 1,
             y_delay = i / 10,

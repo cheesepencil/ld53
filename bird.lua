@@ -1,3 +1,12 @@
+function _bird_get_hitbox(bird)
+    return {
+        x = bird.x + 2,
+        y = bird.y + 4,
+        w = 11,
+        h = 5,
+    }
+end
+
 function _bird_update(bird, inputs)
     -- bird y    
     bird.y_velocity += GRAVITY
@@ -72,6 +81,7 @@ function make_bird(world, x, y)
 
     bird.update = _bird_update
     bird.draw = _bird_draw
+    bird.get_hitbox = _bird_get_hitbox
 
     return bird
 end
