@@ -71,7 +71,7 @@ function _scene_update(scene, inputs)
     scene.gators:update()
     scene.balloon:update()
     for drone in all(scene.drones) do
-        drone:update()
+        drone:update(scene.drone_cycle_start)
     end
     for redhat in all(scene.redhats) do
         redhat:update()
@@ -124,7 +124,7 @@ function _scene_update(scene, inputs)
     -- baby vs drone
     if scene.baby and not DEBUG then
         for drone in all(scene.drones) do
-            local collision = collide_bird_vs_drone(scene.baby, drone)
+            local collision = collide_baby_vs_drone(scene.baby, drone)
             if collision then
                 sfx(4)
                 sfx(5)
@@ -147,7 +147,7 @@ function _scene_update(scene, inputs)
     -- drone vs bird
     if scene.bird and not DEBUG then
         for drone in all(scene.drones) do
-            local collision = collide_bird_vs_drone(scene.bird, drone)
+            local collision = _collide(scene.bird:get_hitbox(), drone:get_hitbox())
             if collision then
                 sfx(5)
                 _scene_kill_bird(scene)
@@ -207,10 +207,22 @@ function _scene_draw(scene)
 
     scene.balloon:draw()
     if scene.bird then scene.bird:draw() end
+    if scene.bird and DEBUG then
+        local b = scene.bird:get_hitbox()
+        rect(b.x, b.y, b.x + b.w, b.y + b.h, 11)
+    end
+
     if scene.baby then scene.baby:draw() end
     scene.gators:draw()
     for juice in all(scene.juice) do
         juice:draw()
+    end
+
+    if DEBUG then
+        for drone in all(scene.drones) do
+            local d = drone:get_hitbox()
+            rect(d.x, d.y, d.x + d.w, d.y + d.h, 11)
+        end
     end
     for drone in all(scene.drones) do
         drone:draw()
@@ -333,6 +345,7 @@ function make_scene(config)
     scene.gators = make_gators(scene.bird, scene.baby, scene.cam)
     scene.balloon = make_balloon(16, 16)
     scene.sun = make_sun()
+    scene.drone_cycle_start = t()
     scene.redhats = {}
     scene.drones = {}
     scene.juice = {}
