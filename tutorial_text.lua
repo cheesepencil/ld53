@@ -4,7 +4,7 @@ end
 
 function _tutorial_text(text, min_x, y, cam)
     local x = cam.x + 1 > min_x and cam.x + 1 or min_x
-    print(text, x, y, 1)
+    print(text, x, y, 6)
 end
 
 function _tutorial_draw(tutorial, cam)
@@ -23,9 +23,9 @@ function _tutorial_draw(tutorial, cam)
         tut_count += 1
     end
 
-    print("avoid drones", 128 * 3 - 72 - 24, 72, 1)
-    print("and other hazards", 128 * 3 - 72 - 24, 79, 1)
-    print("deliver baby here ->", 128 * 3 - 100 - 10, 110)
+    print("avoid drones", 128 * 3 - 72 - 24, 72, 6)
+    print("and other hazards", 128 * 3 - 72 - 24, 79, 6)
+    print("deliver baby here ->", 128 * 3 - 100 - 10, 110, 6)
 end
 
 function make_tutorial_text()

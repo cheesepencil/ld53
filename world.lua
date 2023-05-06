@@ -22,9 +22,14 @@ function _world_draw(world)
     -- grass
     rectfill(0, world.ground_level, world.width, world.ground_level + 1, 5)
 
+    -- trees
+    for tree in all(world.trees) do
+        spr(32, tree.x, tree.y, 2, 2, tree.flip)
+    end
+
     -- shrubs
     for shrub in all(world.shrubs) do
-        spr(shrub.sprite, shrub.x, shrub.y)
+        spr(shrub.sprite, shrub.x, shrub.y, 1, 1, shrub.flip)
     end
 
     -- goal
@@ -42,14 +47,16 @@ function _world_draw(world)
     end
 end
 
-function make_world(width, height, seed)
-    srand(seed)
+function make_world(width, seed)
+    printh(seed)
+    srand(nil)
     local world = {
         width = width or 128 * 3, -- multiples of 128 please! 384 min
         height = height or 128,
         ground_level = 120,
         shrubs = {},
         goals = {},
+        trees = {},
         successes = 0,
     }
 
@@ -64,12 +71,23 @@ function make_world(width, height, seed)
         })
     end
 
+    srand(seed and seed + 3.333 or 4.333)
+    local tree_count = flr(world.width / 128) * 2
+    for i = 1, tree_count do
+        add(world.trees, {
+            x = i * 64 + (18 * rnd({1, -1})),
+            y = world.ground_level - 15,
+            flip = rnd({true, false})
+        })
+    end
+
     if DEBUG then
         for goal in all(world.goals) do
             printh("goal at: " .. goal.x)
         end
     end
 
+    srand(seed)
     local shrub_count = world.width // 8
     for i = 1, shrub_count + 1 do
         for j = 1, 2 do
@@ -77,7 +95,7 @@ function make_world(width, height, seed)
                 sprite = rnd({5, 20, 21}),
                 x = ((i - 1) * 8) + flr(rnd(5)) * rnd({-1, 1}),
                 y = (world.ground_level - 8) + flr(rnd(9)),
-                rnd({true, false})
+                flip = rnd({true, false})
             })
         end
     end
