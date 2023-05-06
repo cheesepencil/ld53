@@ -194,15 +194,7 @@ function _scene_draw(scene)
     scene.world:draw()
 
     if scene.tutorial then
-        print("<- baby dispenser", 32 + 16, 32, 1)
-        print("tap 🅾️ to flap", 72, 72, 1)
-        print("⬅️ and ➡️ to change direction", 72 - 10, 72 + 24, 1)
-        print("hold ❎ to aim", 150, 32, 1)
-        print("release ❎ to deliver...", 170, 42, 1)
-        print("<- missed? get more babies", 178, 58, 1)
-        print("avoid drones", 128 * 3 - 72 - 24, 64, 1)
-        print("and other hazards", 128 * 3 - 72 - 24, 72, 1)
-        print("deliver baby here ->", 128 * 3 - 100 - 10, 110)
+        scene.tutorial:draw(scene.cam)
     end
 
     scene.balloon:draw()

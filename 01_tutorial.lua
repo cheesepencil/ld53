@@ -25,5 +25,7 @@ function make_tutorial_level(start_time, lives)
         })
     }
 
+    scene.tutorial = make_tutorial_text(scene.cam)
+
     return scene
 end
