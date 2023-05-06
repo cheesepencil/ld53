@@ -1,3 +1,6 @@
+BIRD_PUFF_COOLDOWN = 0.125
+BIRD_PUFF_DURATION = 0.25
+
 function _bird_get_hitbox(bird)
     return {
         x = bird.x + 2,
@@ -22,6 +25,8 @@ function _bird_update(bird, inputs)
             bird.x_velocity += FLAP_POWER * (bird.left and -1 or 1)
             bird.flapped_at = t()
             bird.sprite = 2
+            bird.create_puffs_until = t() + BIRD_PUFF_DURATION
+            bird.create_puff_after = t()
         end
     else
         bird.flapped = false
@@ -59,9 +64,33 @@ function _bird_update(bird, inputs)
         bird.x_velocity = 0
         bird.left = false
     end
+
+    if t() < bird.create_puffs_until and t() >= bird.create_puff_after then
+        bird.create_puff_after = t() + BIRD_PUFF_COOLDOWN
+        function del_puff(puff_to_del)
+            del(bird.puffs, puff_to_del)
+        end
+
+        local puff = make_puff({
+            x = bird.x + 8 + rnd({0,1}),
+            y = bird.y + 10 + rnd({0,1}),
+            radius = 3,
+            shrink_speed = 0.125,
+            callback = del_puff
+        })
+        add(bird.puffs, puff)
+    end
+
+    for puff in all(bird.puffs) do
+        puff:update()
+    end
 end
 
 function _bird_draw(bird)
+    for puff in all(bird.puffs) do
+        puff:draw()
+    end
+
     local sprite = bird.y_velocity > 0 and 0 or 2
     spr(bird.sprite, bird.x, bird.y, 2, 2, bird.left)
 end
@@ -77,6 +106,9 @@ function make_bird(world, x, y)
         flapped = false,
         flapped_at = 0,
         sprite = 0,
+        puffs = {},
+        create_puff_after = t(),
+        create_puffs_until = t(),
     }
 
     bird.update = _bird_update

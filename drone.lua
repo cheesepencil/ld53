@@ -25,8 +25,8 @@ function _drone_update(drone, drone_cycle_start)
         end
 
         local puff = make_puff({
-            x = drone.x + 2 + rnd({0,1}),
-            y = drone.y + 2 + rnd({0,1}),
+            x = drone.x + 3 + rnd({0,1}),
+            y = drone.y + 3 + rnd({0,1}),
             radius = 2.5,
             callback = del_puff
         })

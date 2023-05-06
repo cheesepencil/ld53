@@ -1,7 +1,5 @@
-PUFF_SHRINK_SPEED = 0.5
-
 function _puff_update(puff)
-    puff.radius -= PUFF_SHRINK_SPEED
+    puff.radius -= puff.shrink_speed
 
     if puff.radius <= 0 then puff:callback() end
 end
@@ -18,7 +16,8 @@ function make_puff(config)
         y = config.y or 64,
         radius = config.radius or 16,
         color = config.color or 7,
-        callback = config.callback or EMPTY_FUNCTION
+        callback = config.callback or EMPTY_FUNCTION,
+        shrink_speed = config.shrink_speed or 0.5
     }
 
     puff.update = _puff_update
