@@ -76,6 +76,7 @@ function _bird_update(bird, inputs)
             y = bird.y + 10 + rnd({0,1}),
             radius = 3,
             shrink_speed = 0.125,
+            pattern = ░,
             callback = del_puff
         })
         add(bird.puffs, puff)

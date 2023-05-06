@@ -5,7 +5,7 @@ function _puff_update(puff)
 end
 
 function _puff_draw(puff)
-    fillp(▒)
+    fillp(puff.pattern)
     circfill(puff.x, puff.y, puff.radius, puff.color)
     fillp()
 end
@@ -17,7 +17,8 @@ function make_puff(config)
         radius = config.radius or 16,
         color = config.color or 7,
         callback = config.callback or EMPTY_FUNCTION,
-        shrink_speed = config.shrink_speed or 0.5
+        shrink_speed = config.shrink_speed or 0.5,
+        pattern = config.pattern or ▒
     }
 
     puff.update = _puff_update
