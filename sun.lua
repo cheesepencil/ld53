@@ -11,14 +11,33 @@ function _sun_update(sun, bird)
 end
 
 function _sun_draw(sun, cam)
+    -- ▒
+    -- ░
     local x0 = cam.x - 1
     local x1 = cam.x + 128
     local y0 = -sun.strength - 1
     local y1 = -1 + sun.strength
 
-    ovalfill(x0, y0, x1, y1, 10)
+    local corona_modifier = 2
+    local corona_modifier2 = 2.5
+
     fillp(░)
-    ovalfill(x0, y0, x1, y1, 9)
+    ovalfill(x0 * - corona_modifier2, 
+        y0 * corona_modifier2,
+        x1 * corona_modifier2, 
+        y1 * corona_modifier2, 
+        8)
+
+    fillp()
+    ovalfill(x0, y0, x1, y1, 10)
+    
+    fillp(▒)
+    ovalfill(x0 * -corona_modifier, 
+        y0 * corona_modifier,
+        x1 * corona_modifier, 
+        y1 * corona_modifier, 
+        9)
+
     fillp()
 end
 

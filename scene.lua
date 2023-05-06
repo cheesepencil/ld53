@@ -211,13 +211,13 @@ function _scene_draw(scene)
         local b = scene.bird:get_hitbox()
         rect(b.x, b.y, b.x + b.w, b.y + b.h, 11)
     end
-
+    
     if scene.baby then scene.baby:draw() end
     scene.gators:draw()
     for juice in all(scene.juice) do
         juice:draw()
     end
-
+    
     if DEBUG then
         for drone in all(scene.drones) do
             local d = drone:get_hitbox()
@@ -227,6 +227,7 @@ function _scene_draw(scene)
     for drone in all(scene.drones) do
         drone:draw()
     end
+    scene.sun:draw(scene.cam)
     for redhat in all(scene.redhats) do
         redhat:draw()
     end
@@ -244,7 +245,6 @@ function _scene_draw(scene)
     print("storks: " .. scene.lives, scene.cam.x + 3 - 1,   2, outline_color)
     print("storks: " .. scene.lives, scene.cam.x + 3,       2, text_color)
 
-    scene.sun:draw(scene.cam)
 
     if scene.over and scene.won then
         fancy_text({
