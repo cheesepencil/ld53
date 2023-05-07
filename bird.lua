@@ -1,5 +1,6 @@
 BIRD_PUFF_COOLDOWN = 0.125
 BIRD_PUFF_DURATION = 0.25
+BIRD_SUMMON_SICKNESS_DURATION = 0.25
 
 function _bird_get_hitbox(bird)
     return {
@@ -17,7 +18,7 @@ function _bird_update(bird, inputs)
         bird.y_velocity = TERMINAL_VELOCITY 
     end
 
-    if inputs.btn_o then
+    if inputs.btn_o and t() > bird.can_flap_after then
         if not bird.flapped then
             sfx(0)
             bird.flapped = true
@@ -115,6 +116,7 @@ function make_bird(world, x, y)
     bird.update = _bird_update
     bird.draw = _bird_draw
     bird.get_hitbox = _bird_get_hitbox
+    bird.can_flap_after = t() + BIRD_SUMMON_SICKNESS_DURATION
 
     return bird
 end
