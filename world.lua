@@ -17,10 +17,13 @@ function _world_draw(world)
     rectfill(0, 0, world.width, 127, 12)
 
     -- dirt
-    rectfill(0, world.ground_level, world.width, 127, 4)
+    rectfill(0, world.ground_level, world.width, 127, 10)
 
     -- grass
     rectfill(0, world.ground_level, world.width, world.ground_level + 1, 5)
+
+    -- ocean
+    rectfill(0, world.ground_level - 1, world.width, world.ground_level - 4, 1)
 
     -- trees
     for tree in all(world.trees) do
@@ -71,12 +74,12 @@ function make_world(width, seed)
         })
     end
 
-    srand(seed and seed + 3.333 or 4.333)
+    srand(seed and seed + 4.333 or 4.333)
     local tree_count = flr(world.width / 128) * 2
     for i = 1, tree_count do
         add(world.trees, {
             x = i * 64 + (18 * rnd({1, -1})),
-            y = world.ground_level - 15,
+            y = world.ground_level - 14 + rnd({-1,0,1}),
             flip = rnd({true, false})
         })
     end
