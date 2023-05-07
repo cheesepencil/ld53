@@ -62,8 +62,9 @@ function _title_draw(scene)
         text = "press 🅾️  to start!",
         x = 32 - 6,
         y = 127 - 10,
-        background_color = 13,
-        text_colors = { 10 },
+        background_color = 7,
+        bubble_depth = 1,
+        text_colors = { 15 },
         outline_color = 0
     })
 end

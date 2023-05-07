@@ -259,13 +259,14 @@ function _scene_draw(scene)
             text = "press 🅾️  to continue!",
             x = scene.cam.x + 32 - 6,
             y = 127 - 32,
-            background_color = 13,
-            text_colors = { 10 },
+            background_color = 7,
+            bubble_depth = 1,
+            text_colors = { 14 },
             outline_color = 0
         })
     elseif scene.over and scene.lost then
         fancy_text({
-            text = "game over",
+            text = "you lose!",
             text_colors = { 8 },
             background_color = 7,
             bubble_depth = 2,
@@ -284,16 +285,18 @@ function _scene_draw(scene)
             text = "🅾️  retry",
             x = scene.cam.x + 32 - 6,
             y = 127 - 32,
-            background_color = 13,
-            text_colors = { 10 },
+            background_color = 7,
+            bubble_depth = 1,
+            text_colors = { 11 },
             outline_color = 0
         })
         fancy_text({
             text = "❎  give up",
             x = scene.cam.x + 32 - 6 + 6 * 8,
             y = 127 - 32,
-            background_color = 13,
-            text_colors = { 10 },
+            background_color = 7,
+            bubble_depth = 1,
+            text_colors = { 8 },
             outline_color = 0
         })
     end
