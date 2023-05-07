@@ -17,7 +17,7 @@ function _world_draw(world)
     rectfill(0, 0, world.width, 127, 12)
 
     -- dirt
-    rectfill(0, world.ground_level, world.width, 127, 10)
+    rectfill(0, world.ground_level, world.width, 127, 4)
 
     -- grass
     rectfill(0, world.ground_level, world.width, world.ground_level + 1, 5)
