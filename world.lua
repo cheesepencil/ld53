@@ -51,7 +51,6 @@ function _world_draw(world)
 end
 
 function make_world(width, seed)
-    printh(seed)
     srand(nil)
     local world = {
         width = width or 128 * 3, -- multiples of 128 please! 384 min

@@ -47,15 +47,17 @@ function _winner_draw(scene)
     local y = 64 - 16
     local minutes = flr(scene.elapsed_time / 60)
     local seconds = flr(scene.elapsed_time) % 60
+    local fractional = flr((scene.elapsed_time - flr(scene.elapsed_time)) * 100)
     print("elapsed time:", 10, y + 2, 1)
-    print(minutes .. "' " .. seconds .. '"', 32, y + 8, 1)
+    print(minutes .. ":" .. seconds .. '.' .. fractional, 32, y + 8, 1)
 
     fancy_text({
         text = "press 🅾️  to retry!",
         x = 32 - 6,
         y = 127 - 10,
-        background_color = 13,
-        text_colors = { 10 },
+        background_color = 7,
+        bubble_depth = 1,
+        text_colors = { 15 },
         outline_color = 0
     })
 end
