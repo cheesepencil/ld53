@@ -94,6 +94,21 @@ function _bird_draw(bird)
     end
 
     local sprite = bird.y_velocity > 0 and 0 or 2
+
+    local outline_color = 0
+    pal({
+        [7] = outline_color,
+        [1] = outline_color,
+        [9] = outline_color,
+        [6] = outline_color,
+        [13] = outline_color,
+    })    
+    spr(bird.sprite, bird.x-1, bird.y, 2, 2, bird.left)
+    spr(bird.sprite, bird.x+1, bird.y, 2, 2, bird.left)
+    spr(bird.sprite, bird.x, bird.y-1, 2, 2, bird.left)
+    spr(bird.sprite, bird.x, bird.y+1, 2, 2, bird.left)
+    
+    pal()
     spr(bird.sprite, bird.x, bird.y, 2, 2, bird.left)
 end
 

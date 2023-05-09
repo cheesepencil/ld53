@@ -37,7 +37,33 @@ function _world_draw(world)
 
     -- goal
     for goal in all(world.goals) do
+        local outline_color = 7
+        pal({
+            [5] = outline_color,
+            [14] = outline_color,
+            [2] = outline_color,
+        })
+        spr(28, goal.x + 5, goal.y + 2 - goal.success_y)
+        spr(28, goal.x + 7, goal.y + 2 - goal.success_y)
+        spr(28, goal.x + 6, goal.y + 1 - goal.success_y)
+        spr(28, goal.x + 6, goal.y + 3 - goal.success_y)
+        pal()
         spr(28, goal.x + 6, goal.y + 2 - goal.success_y)
+        
+        outline_color = 0
+        pal({
+            [1] = outline_color,
+            [5] = outline_color,
+            [10] = outline_color,
+            [9] = outline_color,
+            [4] = outline_color,
+            [7] = outline_color,
+        })
+        spr(8, goal.x+1, goal.y, 2, 2)
+        spr(8, goal.x-1, goal.y, 2, 2)
+        spr(8, goal.x, goal.y+1, 2, 2)
+        spr(8, goal.x, goal.y-1, 2, 2)
+        pal()
         spr(8, goal.x, goal.y, 2, 2)
     end
 

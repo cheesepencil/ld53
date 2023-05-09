@@ -58,10 +58,34 @@ function _gators_update(gators)
 end
 
 function _gators_draw(gators)
+    local outline_color = 0
+    
     -- left gator
+    pal({
+        [7] = outline_color,
+        [3] = outline_color,
+        [4] = outline_color,
+    })
+    spr(gators.left_gator.anim_frame, gators.left_gator.x-1, gators.left_gator.y, 2, 1)
+    spr(gators.left_gator.anim_frame, gators.left_gator.x+1, gators.left_gator.y, 2, 1)
+    spr(gators.left_gator.anim_frame, gators.left_gator.x, gators.left_gator.y-1, 2, 1)
+    spr(gators.left_gator.anim_frame, gators.left_gator.x, gators.left_gator.y+1, 2, 1)
+    
+    pal()
     spr(gators.left_gator.anim_frame, gators.left_gator.x, gators.left_gator.y, 2, 1)
 
     -- right gator
+    pal({
+        [7] = outline_color,
+        [3] = outline_color,
+        [4] = outline_color,
+    })
+    spr(gators.right_gator.anim_frame, gators.right_gator.x-1, gators.right_gator.y, 2, 1, true)
+    spr(gators.right_gator.anim_frame, gators.right_gator.x+1, gators.right_gator.y, 2, 1, true)
+    spr(gators.right_gator.anim_frame, gators.right_gator.x, gators.right_gator.y-1, 2, 1, true)
+    spr(gators.right_gator.anim_frame, gators.right_gator.x, gators.right_gator.y+1, 2, 1, true)
+
+    pal()
     spr(gators.right_gator.anim_frame, gators.right_gator.x, gators.right_gator.y, 2, 1, true)
 end
 
@@ -79,12 +103,14 @@ function make_gators(bird, baby, cam)
 
     gators.left_gator = {
         x = cam.x - 16, 
+        y = 128 - 19,
         target_x = cam.x, 
         distance = 1,
         anim_frame = 6,
     }
     gators.right_gator = {
         x = cam.x + 128, 
+        y = 128 - 15,
         target_x = cam.x + 128,
         distance = 1,
         anim_frame = 22,

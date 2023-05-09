@@ -84,6 +84,20 @@ function _redhat_update(redhat)
 end
 
 function _redhat_draw(redhat)
+    local outline_color = 0
+    pal({
+        [8] = outline_color,
+        [15] = outline_color,
+        [1] = outline_color,
+        [2] = outline_color,
+        [4] = outline_color,
+    })
+    spr(14, redhat.x-1, redhat.y, 2, 2, redhat.flip)
+    spr(14, redhat.x+1, redhat.y, 2, 2, redhat.flip)
+    spr(14, redhat.x, redhat.y-1, 2, 2, redhat.flip)
+    spr(14, redhat.x, redhat.y+1, 2, 2, redhat.flip)
+    
+    pal()
     spr(14, redhat.x, redhat.y, 2, 2, redhat.flip)
     for bullet in all(redhat.bullets) do
         circfill(bullet.x, bullet.y, 1, 0)

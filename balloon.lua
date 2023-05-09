@@ -6,6 +6,19 @@ function _balloon_update(balloon)
 end
 
 function _balloon_draw(balloon)
+    local outline_color = 0
+    pal({
+        [14] = outline_color,
+        [7] = outline_color,
+        [2] = outline_color,
+        [4] = outline_color,
+    })
+    sspr(80, 0, 16, 16, balloon.x-1, balloon.y, balloon.w, balloon.h)
+    sspr(80, 0, 16, 16, balloon.x+1, balloon.y, balloon.w, balloon.h)
+    sspr(80, 0, 16, 16, balloon.x, balloon.y-1, balloon.w, balloon.h)
+    sspr(80, 0, 16, 16, balloon.x, balloon.y+1, balloon.w, balloon.h)
+
+    pal()
     sspr(80, 0, 16, 16, balloon.x, balloon.y, balloon.w, balloon.h)
 end
 
